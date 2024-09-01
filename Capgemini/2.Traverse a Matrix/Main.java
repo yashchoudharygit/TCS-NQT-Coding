@@ -1,25 +1,30 @@
-public class Main {
-    public static void main(String[] args) {
-        int a[][] = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16},{17,18,19,20}};
-        int rs = 0, re = 5, cs = 0, ce = 4;
-        for(int i = 0; i < 5; i++) {
-            for(int j = 0; j < 4; j++) {
-                System.out.print(a[i][j] + "\t");}
-            System.out.println(); }
-        System.out.println();
-        while(rs < re && cs < ce) {
-            for(int i = cs; i < ce; i++) {
-                System.out.print(a[rs][i] + "\t");}
-            rs++;
-            for(int i = rs; i < re; i++) {
-                System.out.print(a[i][ce - 1] + "\t");}
-            ce--;
-            if(rs < re) {
-                for(int i = ce - 1; i >= cs; --i) {
-                    System.out.print(a[re - 1][i] + "\t");}
-                re--;}
-            if(cs < ce) {
-                for(int i = re - 1; i >= rs; --i) {
-                    System.out.print(a[i][cs] + "\t");}
-                cs++;
-            }}}}
+import java.util.ArrayList;
+import java.util.List;
+class Solution {
+    public List<Integer> spiralOrder(int[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int top = 0, left = 0;
+        int bottom = rows - 1, right = cols - 1;
+        int direction = 0;
+        List<Integer> result = new ArrayList<>();
+        while (top <= bottom && left <= right) {
+            if (direction == 0) { // left -> right
+                for (int i = top; i <= right; i++) {
+                    result.add(matrix[top][i]);}
+                top++;
+            } else if (direction == 1) { // top -> bottom
+                for (int i = top; i <= bottom; i++) {
+                    result.add(matrix[i][right]);}
+                right--;
+            } else if (direction == 2) { // right -> left
+                for (int i = right; i >= left; i--) {
+                    result.add(matrix[bottom][i]);}
+                bottom--;
+            } else if (direction == 3) { // bottom -> top
+                for (int i = bottom; i >= top; i--) {
+                    result.add(matrix[i][left]);}
+                left++;}
+            direction = (direction + 1) % 4;}
+        return result;
+    }}

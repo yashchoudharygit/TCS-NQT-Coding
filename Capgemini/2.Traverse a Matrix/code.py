@@ -1,25 +1,34 @@
-a = [[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12], [13, 14, 15, 16], [17, 18, 19, 20]]
-rs, re, cs, ce = 0, 5, 0, 4
+class Solution:
+    def spiralOrder(self, matrix: List[List[int]]) -> List[int]:
+        rows = len(matrix)
+        cols = len(matrix[0])
+        top, left = 0, 0
+        bottom, right = rows - 1, cols - 1
+        direction = 0
+        result = []
+        while top <= bottom and left <= right:
 
-for row in a:
-    print("\t".join(map(str, row)))
-print()
-
-while rs < re and cs < ce:
-    for i in range(cs, ce):
-        print(a[rs][i], end="\t")
-    rs += 1
-
-    for i in range(rs, re):
-        print(a[i][ce - 1], end="\t")
-    ce -= 1
-
-    if rs < re:
-        for i in range(ce - 1, cs - 1, -1):
-            print(a[re - 1][i], end="\t")
-        re -= 1
-
-    if cs < ce:
-        for i in range(re - 1, rs - 1, -1):
-            print(a[i][cs], end="\t")
-        cs += 1
+            if direction == 0: # left -> right
+                for i in range(top, right+1):
+                    result.append(matrix[top][i])
+                top += 1 
+            
+            # top -> bottom
+            elif direction == 1: 
+                for i in range(top, bottom+1):
+                    result.append(matrix[i][right])
+                right -= 1
+            
+            # right -> left
+            elif direction == 2:
+                for i in range(right, left - 1, -1):
+                    result.append(matrix[bottom][i])
+                bottom -= 1
+            
+            elif direction == 3:
+                for i in range(bottom, top-1, -1):
+                    result.append(matrix[i][left])
+                left += 1 
+            
+            direction = (direction + 1) % 4
+        return result

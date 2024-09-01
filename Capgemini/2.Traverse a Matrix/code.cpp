@@ -1,28 +1,29 @@
-#include<iostream>
-using namespace std;
-int main() {
-    int a[5][4] = {{1,2,3,4},{5,6,7,8},{9,10,11,12},{13,14,15,16},{17,18,19,20}};
-    int rs = 0, re = 5, cs = 0, ce = 4;
-    for(int i = 0; i < 5; i++) {
-        for(int j = 0; j < 4; j++) {
-            cout << a[i][j] << "\t";}
-        cout << "\n";}
-    cout << "\n";
-    while(rs < re && cs < ce) {
-        for(int i = cs; i < ce; i++) {
-            cout << a[rs][i] << "\t";}
-        rs++;
-        for(int i = rs; i < re; i++) {
-            cout << a[i][ce - 1] << "\t";}
-        ce--;
-        if(rs < re) {
-            for(int i = ce - 1; i >= cs; --i) {
-                cout << a[re - 1][i] << "\t";}
-            re--;}
-        if(cs < ce) {
-            for(int i = re - 1; i >= rs; --i) {
-                cout << a[i][cs] << "\t";}
-            cs++;
-        }}
-    return 0;
-}
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+        int top = 0, left = 0;
+        int bottom = rows - 1, right = cols - 1;
+        int direction = 0;
+        vector<int> result;
+        while (top <= bottom && left <= right) {
+            if (direction == 0) { // left -> right
+                for (int i = top; i <= right; i++) {
+                    result.push_back(matrix[top][i]);}
+                top++;
+            } else if (direction == 1) { // top -> bottom
+                for (int i = top; i <= bottom; i++) {
+                    result.push_back(matrix[i][right]);}
+                right--;
+            } else if (direction == 2) { // right -> left
+                for (int i = right; i >= left; i--) {
+                    result.push_back(matrix[bottom][i]);}
+                bottom--;
+            } else if (direction == 3) { // bottom -> top
+                for (int i = bottom; i >= top; i--) {
+                    result.push_back(matrix[i][left]);}
+                left++;}
+            direction = (direction + 1) % 4;}
+        return result;}
+};
