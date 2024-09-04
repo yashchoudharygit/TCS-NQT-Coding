@@ -1,17 +1,21 @@
 import java.util.Scanner;
 public class PrimeCheck {
-    public static int isPrime(int n) {
-        if (n <= 1) return 0;
-        if (n <= 3) return 1;
-        if (n % 2 == 0 || n % 3 == 0) return 0;
-        for (int i = 5; i * i <= n; i += 6) {
-            if (n % i == 0 || n % (i + 2) == 0) return 0;
+    public static boolean checkPrime(int n) {
+        if (n <= 1) return false;
+        for (int i = 2; i <= Math.sqrt(n); i++) {
+            if (n % i == 0) return false;
         }
-        return 1;
+        return true;
     }
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter a number: ");
         int n = scanner.nextInt();
-        System.out.println(isPrime(n));
+        if (checkPrime(n)) {
+            System.out.println("1");
+        } else {
+            System.out.println("0");
+        }
+        scanner.close();
     }
 }
