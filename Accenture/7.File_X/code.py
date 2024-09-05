@@ -6,8 +6,7 @@ def latest_version(S):
             version = int(parts[1]) 
             latest = max(latest, version) 
     return latest
-n = int(input("Enter number of files: "))
-S = []
-for i in range(n):
-    S.append(input(f"Enter file name {i+1}: "))
+
+n = int(input())
+S = list(map(str, input().split()))
 print("Latest version:", latest_version(S))
